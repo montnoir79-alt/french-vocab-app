@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仏検1級単語帳（例文付き）</title>
+    <title>仏検単語帳（音声付き）</title>
     <style>
         body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f0f2f5; }
         .card { background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 350px; }
-        .french { font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; color: #002395; }
+        .french-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
+        .french { font-size: 1.8rem; font-weight: bold; color: #002395; }
+        .btn-audio { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0; color: #666; width: auto; margin: 0; }
         .japanese { font-size: 1.1rem; color: #ed2939; margin-bottom: 15px; display: none; font-weight: bold; }
-        .example { font-size: 0.9rem; color: #555; background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 20px; display: none; text-align: left; line-height: 1.4; border-left: 4px solid #002395; }
+        .example { font-size: 0.9rem; color: #555; background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 20px; display: none; text-align: left; line-height: 1.4; border-left: 4px solid #002395; cursor: pointer; }
         button { padding: 12px; width: 100%; margin-top: 8px; cursor: pointer; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem; }
         .btn-main { background: #002395; color: white; border: none; font-weight: bold; }
         .btn-sub { background: #eee; }
@@ -18,9 +20,13 @@
 <body>
 
 <div class="card">
-    <div id="word" class="french">読み込み中...</div>
+    <div class="french-container">
+        <div id="word" class="french">読み込み中...</div>
+        <button class="btn-audio" onclick="speakWord()">🔊</button>
+    </div>
+    
     <div id="meaning" class="japanese">意味</div>
-    <div id="example" class="example">例文</div>
+    <div id="example" class="example" onclick="speakExample()">例文（タップで再生）</div>
     
     <button class="btn-sub" onclick="showMeaning()">意味を見る</button>
     <button class="btn-sub" onclick="showExample()">例文を見る</button>
@@ -28,7 +34,8 @@
 </div>
 
 <script>
-   const words = [
+    // ここにこれまでの words リスト（単語データ）を貼り付けてください
+    const words = [
         // 動詞 (Verbes)
         { f: "vituperer", j: "〜を激しく非難する、罵倒する", e: "Les éditorialistes n'ont cessé de vitupérer contre la passivité du gouvernement." },
         { f: "obnubiler", j: "（考えなどが）〜を暗くする、とりこにする", e: "L'ambition l'obnubile au point qu'il en oublie ses proches." },
@@ -140,16 +147,35 @@
         { f: "rancœur", j: "恨み、根に持つ気持ち", e: "Elle ne garde aucune rancœur malgré tout ce qui s'est passé." },
         { f: "témoignage", j: "証言、証拠", e: "Le témoignage de l'expert a été décisif lors du procès." }
     ];
+
     let index = 0;
 
     function display() {
         const item = words[index];
         document.getElementById('word').textContent = item.f;
         document.getElementById('meaning').textContent = item.j;
-        document.getElementById('example').textContent = item.e || "（例文はまだ登録されていません）";
+        document.getElementById('example').textContent = item.e || "";
         
         document.getElementById('meaning').style.display = 'none';
         document.getElementById('example').style.display = 'none';
+    }
+
+    // 音声読み上げ関数
+    function speak(text) {
+        // すでに喋っている場合はキャンセル
+        window.speechSynthesis.cancel();
+        const uttr = new SpeechSynthesisUtterance(text);
+        uttr.lang = 'fr-FR'; // フランス語に設定
+        uttr.rate = 0.9;     // 少しゆっくりめに再生
+        window.speechSynthesis.speak(uttr);
+    }
+
+    function speakWord() {
+        speak(words[index].f);
+    }
+
+    function speakExample() {
+        speak(words[index].e);
     }
 
     function showMeaning() {
@@ -170,4 +196,3 @@
 
 </body>
 </html>
-
