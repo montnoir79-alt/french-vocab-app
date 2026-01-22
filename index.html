@@ -3,61 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仏検1級単語学習アプリ</title>
-    
-    <link rel="manifest" href="manifest.json">
-    
+    <title>仏検1級テスト</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0; }
-        .card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 85%; max-width: 350px; text-align: center; }
-        .french { font-size: 1.8rem; font-weight: bold; color: #002395; margin-bottom: 1rem; }
-        .japanese { font-size: 1.2rem; color: #ed2939; margin-bottom: 2rem; min-height: 1.5em; visibility: hidden; }
-        .japanese.show { visibility: visible; }
-        button { padding: 12px 20px; font-size: 1rem; cursor: pointer; border: none; border-radius: 5px; margin: 5px; width: 80%; transition: 0.3s; }
-        .btn-show { background-color: #eee; }
-        .btn-next { background-color: #002395; color: white; }
-        button:hover { opacity: 0.8; }
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f0f2f5; }
+        .card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 280px; }
+        .french { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; color: #002395; }
+        .japanese { font-size: 1.1rem; color: #ed2939; margin-bottom: 20px; display: none; }
+        button { padding: 10px; width: 100%; margin-top: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <div id="french-word" class="french">Chargement...</div>
-    <div id="japanese-meaning" class="japanese">意味</div>
-    
-    <button class="btn-show" onclick="showMeaning()">意味を見る</button>
-    <button class="btn-next" onclick="nextWord()">次の単語へ</button>
+    <div id="word" class="french">読み込み中...</div>
+    <div id="meaning" class="japanese">意味</div>
+    <button onclick="show()">意味を見る</button>
+    <button onclick="next()" style="background:#002395; color:white; border:none;">次へ</button>
 </div>
 
 <script>
-    // --- 単語データ（ここを書き換えて単語を増やせます） ---
-    const wordList = [
-        { fr: "exténuer", jp: "〜を衰弱させる、疲れ果てさせる" },
-        { fr: "péremptoire", jp: "断固とした、決定的な" },
-        { fr: "scrupuleusement", jp: "几帳面に、良心的に" },
-        { fr: "s'enquérir", jp: "〜を問い合わせる、尋ねる" },
-        { fr: "velléité", jp: "（実行を伴わない）単なる思いつき、気まずさ" }
+    // 単語リスト
+    const words = [
+        { f: "exténuer", j: "〜を衰弱させる" },
+        { f: "péremptoire", j: "断固とした" },
+        { f: "velléité", j: "単なる思いつき" }
     ];
 
-    let currentIndex = 0;
+    let index = 0;
 
-    function updateCard() {
-        const word = wordList[currentIndex];
-        document.getElementById('french-word').textContent = word.fr;
-        document.getElementById('japanese-meaning').textContent = word.jp;
-        document.getElementById('japanese-meaning').classList.remove('show');
+    function display() {
+        document.getElementById('word').textContent = words[index].f;
+        document.getElementById('meaning').textContent = words[index].j;
+        document.getElementById('meaning').style.display = 'none';
     }
 
-    function showMeaning() {
-        document.getElementById('japanese-meaning').classList.add('show');
+    function show() {
+        document.getElementById('meaning').style.display = 'block';
     }
 
-    function nextWord() {
-        currentIndex = Math.floor(Math.random() * wordList.length);
-        updateCard();
+    function next() {
+        index = Math.floor(Math.random() * words.length);
+        display();
     }
 
-    // 初回表示の実行
-    updateCard();
+    // ページが開かれた瞬間に実行
+    window.onload = function() {
+        display();
+    };
+</script>
 
-    // 【追記2】アプリとして
+</body>
+</html>
