@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仏検1級テスト</title>
+    <title>仏検1級単語帳（例文付き）</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f0f2f5; }
-        .card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 280px; }
-        .french { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; color: #002395; }
-        .japanese { font-size: 1.1rem; color: #ed2939; margin-bottom: 20px; display: none; }
-        button { padding: 10px; width: 100%; margin-top: 10px; cursor: pointer; }
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f0f2f5; }
+        .card { background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 350px; }
+        .french { font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; color: #002395; }
+        .japanese { font-size: 1.1rem; color: #ed2939; margin-bottom: 15px; display: none; font-weight: bold; }
+        .example { font-size: 0.9rem; color: #555; background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 20px; display: none; text-align: left; line-height: 1.4; border-left: 4px solid #002395; }
+        button { padding: 12px; width: 100%; margin-top: 8px; cursor: pointer; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem; }
+        .btn-main { background: #002395; color: white; border: none; font-weight: bold; }
+        .btn-sub { background: #eee; }
     </style>
 </head>
 <body>
@@ -17,78 +20,89 @@
 <div class="card">
     <div id="word" class="french">読み込み中...</div>
     <div id="meaning" class="japanese">意味</div>
-    <button onclick="show()">意味を見る</button>
-    <button onclick="next()" style="background:#002395; color:white; border:none;">次へ</button>
+    <div id="example" class="example">例文</div>
+    
+    <button class="btn-sub" onclick="showMeaning()">意味を見る</button>
+    <button class="btn-sub" onclick="showExample()">例文を見る</button>
+    <button class="btn-main" onclick="next()">次の単語へ</button>
 </div>
 
 <script>
-    // 単語リスト（修正済み）
-    const words = [
-        { f: "exténuer", j: "〜を衰弱させる" },
-        { f: "péremptoire", j: "断固とした" },
-        { f: "velléité", j: "単なる思いつき" }, // ← ここにカンマが必要でした
-        { f: "vituperer", j: "〜を激しく非難する、罵倒する" },
-        { f: "obnubiler", j: "（考えなどが）〜を暗くする、とりこにする" },
-        { f: "procrastiner", j: "（やるべきことを）先延ばしにする" },
-        { f: "assouvir", j: "（欲望や渇きを）十分に満たす" },
-        { f: "élucider", j: "（謎や問題を）解明する、明らかにする" },
-        { f: "subjuguer", j: "〜を征服する、魅了して虜にする" },
-        { f: "déambuler", j: "ぶらぶら歩く、そぞろ歩く" },
-        { f: "s'adonner", j: "〜にふける、専念する" },
-        { f: "agrémenter", j: "〜に彩りを添える、趣を添える" },
-        { f: "extorquer", j: "（金品や情報を）ゆすり取る、強要する" },
-        { f: "succomber", j: "屈する、耐えかねる、死ぬ" },
-        { f: "se faufiler", j: "（人混みなどを）すり抜ける、忍び込む" },
-        { f: "vaticiner", j: "予言する、大言壮語する" },
-        { f: "stigmatiser", j: "〜に汚名を着せる、強く非難する" },
-        { f: "dilapider", j: "（財産などを）浪費する、使い果たす" },
-        { f: "rédhibitoire", j: "決定的な欠陥となる、受け入れがたい" },
-        { f: "sporadique", j: "散発的な、時々起こる" },
-        { f: "insidieux", j: "（病気や悪意が）潜行性の、狡猾な" },
-        { f: "indéniable", j: "否定できない、明白な" },
-        { f: "exhaustif", j: "網羅的な、徹底的な" },
-        { f: "dilatoire", j: "（決定を）遅らせるための、引き延ばしの" },
-        { f: "pittoresque", j: "絵のような、独特の趣がある" },
-        { f: "obsolète", j: "時代遅れの、廃れた" },
-        { f: "réfractaire", j: "従わない、反抗的な" },
-        { f: "invétéré", j: "（習慣などが）根深い、常習的な" },
-        { f: "défectueux", j: "欠陥のある、不完全な" },
-        { f: "viscéral", j: "内臓の、理屈抜きで直感的な" },
-        { f: "debonair", j: "陽気で上品な、愛想の良い" },
-        { f: "intempestif", j: "時宜を得ない、不用意な" },
-        { f: "fallacieux", j: "（根拠が）偽りの、あてにならない" },
-        { f: "immuable", j: "不変の、永続的な" },
-        { f: "loquace", j: "おしゃべりな、饒舌な" },
-        { f: "velléité", j: "（実行を伴わない）単なる思いつき、気まずさ" },
-        { f: "pérennité", j: "永続性、持続性" },
-        { f: "scission", j: "（団体の）分裂、分離" },
-        { f: "conjoncture", j: "（経済・政治などの）局面、情勢" },
-        { f: "complicité", j: "共謀、共犯関係" },
-        { f: "allégresse", j: "歓喜、大きな喜び" },
-        { f: "paradigme", j: "理論的枠組み、典型的な例" },
-        { f: "corvée", j: "骨の折れる仕事、嫌な役目" },
-        { f: "aversion", j: "嫌悪、強い拒否感" },
-        { f: "entrain", j: "活気、意気込み、陽気さ" },
-        { f: "naufrage", j: "難破、挫折、破滅" },
-        { f: "addendum", j: "付録、追加事項" },
-        { f: "scrupule", j: "良心の呵責、ためらい、几帳面さ" },
-        { f: "vicissitude", j: "（運命などの）変転、波乱" },
-        { f: "apanage", j: "特権、固有の持ち物" },
-        { f: "ostentation", j: "（見栄を張った）誇示、ひけらかし" },
-        { f: "anachronisme", j: "時代錯誤" },
-        { f: "détracteur", j: "中傷する人、批判者" }
-    ]; // ← 閉じカッコを一つに整理しました
+   const words = [
+        // 動詞 (Verbes)
+        { f: "vituperer", j: "〜を激しく非難する、罵倒する", e: "Les éditorialistes n'ont cessé de vitupérer contre la passivité du gouvernement." },
+        { f: "obnubiler", j: "（考えなどが）〜を暗くする、とりこにする", e: "L'ambition l'obnubile au point qu'il en oublie ses proches." },
+        { f: "procrastiner", j: "（やるべきことを）先延ばしにする", e: "À force de procrastiner, il s'est retrouvé submergé de travail à la veille de l'examen." },
+        { f: "assouvir", j: "（欲望や渇きを）十分に満たす", e: "Rien ne semblait pouvoir assouvir sa soif de connaissances." },
+        { f: "élucider", j: "（謎や問題を）解明する、明らかにする", e: "Les enquêteurs tentent d'élucider les circonstances mystérieuses de sa disparition." },
+        { f: "subjuguer", j: "〜を征服する、魅了して虜にする", e: "Son talent d'orateur a subjugué l'ensemble de l'auditoire." },
+        { f: "déambuler", j: "ぶらぶら歩く、そぞろ歩く", e: "Il aimait déambuler des heures durant dans les vieux quartiers de Paris." },
+        { f: "s'adonner", j: "〜にふける、専念する", e: "Pendant sa retraite, il s'est adonné passionnément à la peinture." },
+        { f: "agrémenter", j: "〜に彩りを添える、趣を添える", e: "Elle a agrémenté son discours de quelques anecdotes pleines d'humour." },
+        { f: "extorquer", j: "（金品や情報を）ゆすり取る、強要する", e: "Le maître chanteur a tenté de lui extorquer une somme exorbitante." },
+        { f: "succomber", j: "屈する、耐えかねる、死ぬ", e: "Il a fini par succomber à la tentation après avoir résisté si longtemps." },
+        { f: "se faufiler", j: "（人混みなどを）すり抜ける、忍び込む", e: "Le chat a réussi à se faufiler par l'entrebâillement de la porte." },
+        { f: "vaticiner", j: "予言する、大言壮語する", e: "Les économistes ne cessent de vaticiner sur l'effondrement prochain du marché." },
+        { f: "stigmatiser", j: "〜に汚名を着せる、強く非難する", e: "Cette mesure risque de stigmatiser davantage les populations précaires." },
+        { f: "dilapider", j: "（財産などを）浪費する、使い果たす", e: "Il a dilapidé tout l'héritage familial en l'espace de quelques mois." },
 
+        // 形容詞 (Adjectifs)
+        { f: "rédhibitoire", j: "決定的な欠陥となる、受け入れがたい", e: "Une mauvaise maîtrise de l'orthographe est rédhibitoire pour devenir rédacteur." },
+        { f: "sporadique", j: "散発的な、時々起こる", e: "On entend encore des tirs sporadiques malgré l'annonce du cessez-le-feu." },
+        { f: "insidieux", j: "（病気や悪意が）潜行性の、狡猾な", e: "Le chantage affectif est une forme de manipulation particulièrement insidieuse." },
+        { f: "indéniable", j: "否定できない、明白な", e: "Son influence sur l'art contemporain est indéniable." },
+        { f: "exhaustif", j: "網羅的な、徹底的な", e: "Ce rapport propose un inventaire exhaustif des ressources naturelles du pays." },
+        { f: "dilatoire", j: "（決定を）遅らせるための、引き延ばしの", e: "L'avocat a multiplié les recours dilatoires pour retarder le procès." },
+        { f: "pittoresque", j: "絵のような、独特の趣がある", e: "Nous avons visité un petit village pittoresque niché au creux des montagnes." },
+        { f: "obsolète", j: "時代遅れの、廃れた", e: "De nombreux termes techniques deviennent vite obsolètes avec le progrès." },
+        { f: "réfractaire", j: "従わない、反抗的な", e: "Une partie de la population reste réfractaire à toute forme de changement." },
+        { f: "invétéré", j: "（習慣などが）根深い、常習的な", e: "C'est un joueur invétéré qui passe ses nuits au casino." },
+        { f: "défectueux", j: "欠陥のある、不完全な", e: "Le constructeur a dû rappeler des milliers de véhicules défectueux." },
+        { f: "viscéral", j: "内臓の、理屈抜きで直感的な", e: "Elle éprouve une peur viscérale dès qu'elle se retrouve dans l'obscurité." },
+        { f: "debonair", j: "陽気で上品な、愛想の良い", e: "Malgré sa fortune, il restait un homme debonair et accessible à tous." },
+        { f: "intempestif", j: "時宜を得ない、不用意な", e: "L'alarme s'est déclenchée de manière intempestive en pleine nuit." },
+        { f: "fallacieux", j: "（根拠が）偽りの、あてにならない", e: "Ses arguments fallacieux n'ont pas réussi à convaincre le jury." },
+        { f: "immuable", j: "不変の、永続的な", e: "Les traditions de cette région semblent immuables face au temps qui passe." },
+        { f: "loquace", j: "おしゃべりな、饒舌な", e: "D'ordinaire si réservé, il s'est montré étonnamment loquace hier soir." },
+
+        // 名詞 (Noms)
+        { f: "velléité", j: "（実行を伴わない）単なる思いつき", e: "Il a eu quelques velléités de réforme, mais a vite abandonné devant l'opposition." },
+        { f: "pérennité", j: "永続性、持続性", e: "La pérennité de l'entreprise dépend de sa capacité à innover." },
+        { f: "scission", j: "（団体の）分裂、分離", e: "Le désaccord profond a fini par provoquer une scission au sein du parti." },
+        { f: "conjoncture", j: "（経済・政治などの）局面、情勢", e: "La conjoncture actuelle n'est pas favorable aux investissements risqués." },
+        { f: "complicité", j: "共謀、共犯関係", e: "Il a été arrêté pour complicité de vol aggravé." },
+        { f: "allégresse", j: "歓喜、大きな喜び", e: "La foule a accueilli la nouvelle avec une allégresse indescriptible." },
+        { f: "paradigme", j: "理論的枠組み、典型的な例", e: "L'intelligence artificielle représente un nouveau paradigme technologique." },
+        { f: "corvée", j: "骨の折れる仕事、嫌な役目", e: "Nettoyer le garage après l'inondation a été une véritable corvée." },
+        { f: "aversion", j: "嫌悪、強い拒否感", e: "Il a une aversion profonde pour tout ce qui touche à la politique." },
+        { f: "entrain", j: "活気、意気込み、陽気さ", e: "Elle anime les réunions avec un entrain qui motive toute l'équipe." },
+        { f: "naufrage", j: "難破、挫折、破滅", e: "L'échec de son dernier film a été un véritable naufrage personnel." },
+        { f: "addendum", j: "付録、追加事項", e: "Veuillez trouver les détails techniques dans l'addendum joint au contrat." },
+        { f: "scrupule", j: "良心の呵責、ためらい、几帳面さ", e: "Elle n'a aucun scrupule à mentir pour obtenir ce qu'elle veut." },
+        { f: "vicissitude", j: "（運命などの）変転、波乱", e: "Leur amitié a résisté aux vicissitudes du temps et de la distance." },
+        { f: "apanage", j: "特権、固有の持ち物", e: "À l'époque, l'accès à l'éducation était l'apanage des classes aisées." },
+        { f: "ostentation", j: "（見栄を張った）誇示、ひけらかし", e: "Il affiche sa richesse avec une ostentation qui agace son entourage." },
+        { f: "anachronisme", j: "時代錯誤", e: "Voir un smartphone dans un film médiéval est un anachronisme flagrant." },
+        { f: "détracteur", j: "中傷する人、批判者", e: "Ses détracteurs l'accusent de manquer de réalisme dans ses projets." }
+    ];
     let index = 0;
 
     function display() {
-        document.getElementById('word').textContent = words[index].f;
-        document.getElementById('meaning').textContent = words[index].j;
+        const item = words[index];
+        document.getElementById('word').textContent = item.f;
+        document.getElementById('meaning').textContent = item.j;
+        document.getElementById('example').textContent = item.e || "（例文はまだ登録されていません）";
+        
         document.getElementById('meaning').style.display = 'none';
+        document.getElementById('example').style.display = 'none';
     }
 
-    function show() {
+    function showMeaning() {
         document.getElementById('meaning').style.display = 'block';
+    }
+
+    function showExample() {
+        document.getElementById('example').style.display = 'block';
     }
 
     function next() {
@@ -96,9 +110,7 @@
         display();
     }
 
-    window.onload = function() {
-        display();
-    };
+    window.onload = display;
 </script>
 
 </body>
