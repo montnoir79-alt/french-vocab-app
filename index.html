@@ -34,14 +34,13 @@
 </div>
 
 <script>
-    // ここにこれまでの words リスト（単語データ）を貼り付けてください
     const words = [
-        // 動詞 (Verbes)
+        // 仏検1級レベル
         { f: "vituperer", j: "〜を激しく非難する、罵倒する", e: "Les éditorialistes n'ont cessé de vitupérer contre la passivité du gouvernement." },
         { f: "obnubiler", j: "（考えなどが）〜を暗くする、とりこにする", e: "L'ambition l'obnubile au point qu'il en oublie ses proches." },
         { f: "procrastiner", j: "（やるべきことを）先延ばしにする", e: "À force de procrastiner, il s'est retrouvé submergé de travail à la veille de l'examen." },
         { f: "assouvir", j: "（欲望や渇きを）十分に満たす", e: "Rien ne semblait pouvoir assouvir sa soif de connaissances." },
-        { f: "élucider", j: "（謎や問題を）解明する、明らかにする", e: "Les enquêteurs tentent d'élucider les circonstances mystérieuses de sa disparition." },
+        { f: "élucider", j: "（謎や問題を）解明する、明らかにする", e: "Les enquêteurs tentent d'élucider les circonstances mystérieieuses de sa disparition." },
         { f: "subjuguer", j: "〜を征服する、魅了して虜にする", e: "Son talent d'orateur a subjugué l'ensemble de l'auditoire." },
         { f: "déambuler", j: "ぶらぶら歩く、そぞろ歩く", e: "Il aimait déambuler des heures durant dans les vieux quartiers de Paris." },
         { f: "s'adonner", j: "〜にふける、専念する", e: "Pendant sa retraite, il s'est adonné passionnément à la peinture." },
@@ -52,8 +51,6 @@
         { f: "vaticiner", j: "予言する、大言壮語する", e: "Les économistes ne cessent de vaticiner sur l'effondrement prochain du marché." },
         { f: "stigmatiser", j: "〜に汚名を着せる、強く非難する", e: "Cette mesure risque de stigmatiser davantage les populations précaires." },
         { f: "dilapider", j: "（財産などを）浪費する、使い果たす", e: "Il a dilapidé tout l'héritage familial en l'espace de quelques mois." },
-
-        // 形容詞 (Adjectifs)
         { f: "rédhibitoire", j: "決定的な欠陥となる、受け入れがたい", e: "Une mauvaise maîtrise de l'orthographe est rédhibitoire pour devenir rédacteur." },
         { f: "sporadique", j: "散発的な、時々起こる", e: "On entend encore des tirs sporadiques malgré l'annonce du cessez-le-feu." },
         { f: "insidieux", j: "（病気や悪意が）潜行性の、狡猾な", e: "Le chantage affectif est une forme de manipulation particulièrement insidieuse." },
@@ -71,10 +68,8 @@
         { f: "fallacieux", j: "（根拠が）偽りの、あてにならない", e: "Ses arguments fallacieux n'ont pas réussi à convaincre le jury." },
         { f: "immuable", j: "不変の、永続的な", e: "Les traditions de cette région semblent immuables face au temps qui passe." },
         { f: "loquace", j: "おしゃべりな、饒舌な", e: "D'ordinaire si réservé, il s'est montré étonnamment loquace hier soir." },
-
-        // 名詞 (Noms)
         { f: "velléité", j: "（実行を伴わない）単なる思いつき", e: "Il a eu quelques velléités de réforme, mais a vite abandonné devant l'opposition." },
-        { f: "pérennité", j: "永続性、持続性", e: "La pérennité de l'entreprise dépend de sa capacité à innover." },
+        { f: "pérennité", j: "永続性、持続性", e: "La pérennité de l'entreprise depende de sa capacité à innover." },
         { f: "scission", j: "（団体の）分裂、分離", e: "Le désaccord profond a fini par provoquer une scission au sein du parti." },
         { f: "conjoncture", j: "（経済・政治などの）局面、情勢", e: "La conjoncture actuelle n'est pas favorable aux investissements risqués." },
         { f: "complicité", j: "共謀、共犯関係", e: "Il a été arrêté pour complicité de vol aggravé." },
@@ -90,61 +85,58 @@
         { f: "apanage", j: "特権、固有の持ち物", e: "À l'époque, l'accès à l'éducation était l'apanage des classes aisées." },
         { f: "ostentation", j: "（見栄を張った）誇示、ひけらかし", e: "Il affiche sa richesse avec une ostentation qui agace son entourage." },
         { f: "anachronisme", j: "時代錯誤", e: "Voir un smartphone dans un film médiéval est un anachronisme flagrant." },
-        { f: "détracteur", j: "中傷する人、批判者", e: "Ses détracteurs l'accusent de manquer de réalisme dans ses projets." }
-       // --- 準1級・2級レベルの動詞 ---
-        { f: "déclencher", j: "（事件・火災など）を引き起こす、始動させる", e: "La signature du contrat a déclenché une vague d'optimisme." },
-        { f: "entraver", j: "〜を妨げる、邪魔する", e: "La neige a entravé la circulation tout au long de la matinée." },
-        { f: "préconiser", j: "〜を推奨する、勧める", e: "Le médecin préconise de faire au moins trente minutes de marche par jour." },
-        { f: "appréhender", j: "〜を懸念する、逮捕する、理解する", e: "Elle appréhende beaucoup son entretien d'embauche de demain." },
-        { f: "concrétiser", j: "〜を具体化する、実現させる", e: "Il a enfin pu concrétiser son projet de faire le tour du monde." },
-        { f: "dissuader", j: "（人に）〜を思いとどまらせる", e: "Ses parents ont tenté de le dissuader de quitter son emploi." },
-        { f: "entamer", j: "〜に着手する、（議論などを）始める", e: "Les deux pays ont décidé d'entamer des négociations de paix." },
-        { f: "réconcilier", j: "〜を和解させる、仲直りさせる", e: "Le médiateur a réussi à réconcilier les deux parties adverses." },
-        { f: "susciter", j: "（感情・反応を）呼び起こす、生じさせる", e: "Cette nouvelle exposition suscite un grand intérêt chez les jeunes." },
-        { f: "procéder", j: "（〜に）着手する、及ぶ", e: "Nous allons procéder à la vérification des dossiers." },
-        { f: "persister", j: "（〜を）しつこく続ける、持続する", e: "Si les symptômes persistent, veuillez consulter un médecin." },
-        { f: "déceler", j: "〜を見抜く、探り当てる", e: "L'examen médical n'a décelé aucune anomalie grave." },
-        { f: "exacerber", j: "（怒り・苦痛などを）激化させる、募らせる", e: "Le manque de sommeil ne fait qu'exacerber son irritabilité." },
-        { f: "revendiquer", j: "〜を要求する、（権利を）主張する", e: "Les syndicats revendiquent une augmentation de salaire immédiate." },
-        { f: "osciller", j: "揺れ動く、変動する", e: "Le prix de l'essence continue d'osciller entre un euro soixante et un euro quatre-vingts." },
+        { f: "détracteur", j: "中傷する人、批判者", e: "Ses détracteurs l'accusent de manquer de réalisme dans ses projets." },
 
-        // --- 準1級・2級レベルの形容詞 ---
-        { f: "précaire", j: "不安定な、一時的な", e: "De nombreux jeunes vivent dans une situation financière précaire." },
-        { f: "rigoureux", j: "厳格な、厳しい", e: "Ce projet demande un contrôle rigoureux de chaque étape." },
-        { f: "ambigu", j: "曖昧な、二通りの意味にとれる", e: "Sa réponse était ambiguë, je ne savais pas s'il acceptait ou non." },
-        { f: "lucide", j: "明晰な、状況を正しく把握している", e: "Il reste lucide malgré la difficulté de la situation." },
-        { f: "superficiel", j: "表面的な、浅はかな", e: "Son analyse du problème est restée très superficielle." },
-        { f: "compatible", j: "（〜と）両立できる、互換性のある", e: "Ce logiciel n'est pas compatible avec votre système d'exploitation." },
-        { f: "spontané", j: "自発的な、のびのびした", e: "Une manifestation spontanée a éclaté devant la mairie." },
-        { f: "notoire", j: "周知の、公然の", e: "C'est un menteur notoire, personne ne le croit plus." },
-        { f: "imminent", j: "差し迫った、今にも起こりそうな", e: "Le départ du train pour Marseille est imminent." },
-        { f: "fortuit", j: "偶然の、思いがけない", e: "C'est par un hasard fortuit que je l'ai rencontré à l'aéroport." },
-        { f: "fastidieux", j: "退屈な、骨の折れる", e: "Le classement de ces archives est une tâche longue et fastidieuse." },
-        { f: "infaillible", j: "絶対確実な、間違いのない", e: "Elle a une méthode infaillible pour mémoriser les verbes irréguliers." },
-        { f: "dérisoire", j: "取るに足らない、わずかな", e: "Il a vendu sa vieille voiture pour une somme dérisoire." },
-        { f: "exhaustif", j: "網羅的な、尽くした", e: "Cette liste n'est pas exhaustive, d'autres noms seront ajoutés." },
-        { f: "indispensable", j: "不可欠な、なくてはならない", e: "Un dictionnaire est indispensable pour traduire ce texte complexe." },
-
-        // --- 準1級・2級レベルの名詞 ---
-        { f: "atout", j: "強み、有利な条件", e: "Sa maîtrise du japonais est un atout majeur pour ce poste." },
-        { f: "contrainte", j: "制約、強制", e: "Travailler à domicile permet d'éviter les contraintes du transport." },
-        { f: "défaillance", j: "故障、欠陥、（意識の）消失", e: "L'accident a été causé par une défaillance technique des freins." },
-        { f: "enjeu", j: "賭けられているもの、争点、重要課題", e: "La protection de l'environnement est l'un des grands enjeux de notre siècle." },
-        { f: "fléau", j: "災い、社会的な害悪", e: "Le chômage est considéré comme un véritable fléau social." },
-        { f: "lacune", j: "欠落、知識の抜け落ち", e: "Il doit combler ses lacunes en grammaire avant l'examen." },
+        // 準1級・2級レベル
+        { f: "déclencher", j: "引き起こす", e: "La signature du contrat a déclenché une vague d'optimisme." },
+        { f: "entraver", j: "妨げる", e: "La neige a entravé la circulation tout au long de la matinée." },
+        { f: "préconiser", j: "推奨する", e: "Le médecin préconise de faire au moins trente minutes de marche par jour." },
+        { f: "appréhender", j: "懸念する、逮捕する", e: "Elle appréhende beaucoup son entretien d'embauche de demain." },
+        { f: "concrétiser", j: "実現させる", e: "Il a enfin pu concrétiser son projet de faire le tour du monde." },
+        { f: "dissuader", j: "思いとどまらせる", e: "Ses parents ont tenté de le dissuader de quitter son emploi." },
+        { f: "entamer", j: "着手する", e: "Les deux pays ont décidé d'entamer des négociations de paix." },
+        { f: "réconcilier", j: "和解させる", e: "Le médiateur a réussi à réconcilier les deux parties adverses." },
+        { f: "susciter", j: "生じさせる", e: "Cette nouvelle exposition suscite un grand intérêt chez les jeunes." },
+        { f: "procéder", j: "着手する", e: "Nous allons procéder à la vérification des dossiers." },
+        { f: "persister", j: "しつこく続ける", e: "Si les symptômes persistent, veuillez consulter un médecin." },
+        { f: "déceler", j: "見抜く", e: "L'examen médical n'a décelé aucune anomalie grave." },
+        { f: "exacerber", j: "激化させる", e: "Le manque de sommeil ne fait qu'exacerber son irritabilité." },
+        { f: "revendiquer", j: "要求する", e: "Les syndicats revendiquent une augmentation de salaire immédiate." },
+        { f: "osciller", j: "揺れ動く", e: "Le prix de l'essence continue d'osciller entre 1.60 et 1.80 euro." },
+        { f: "précaire", j: "不安定な", e: "De nombreux jeunes vivent dans une situation financière précaire." },
+        { f: "rigoureux", j: "厳格な", e: "Ce projet demande un contrôle rigoureux de chaque étape." },
+        { f: "ambigu", j: "曖昧な", e: "Sa réponse était ambiguë, je ne savais pas s'il acceptait ou non." },
+        { f: "lucide", j: "明晰な", e: "Il reste lucide malgré la difficulté de la situation." },
+        { f: "superficiel", j: "表面的な", e: "Son analyse du problème est restée très superficielle." },
+        { f: "compatible", j: "両立できる", e: "Ce logiciel n'est pas compatible avec votre système d'exploitation." },
+        { f: "spontané", j: "自発的な", e: "Une manifestation spontanée a éclaté devant la mairie." },
+        { f: "notoire", j: "周知の", e: "C'est un menteur notoire, personne ne le croit plus." },
+        { f: "imminent", j: "差し迫った", e: "Le départ du train pour Marseille est imminent." },
+        { f: "fortuit", j: "偶然の", e: "C'est par un hasard fortuit que je l'ai rencontré à l'aéroport." },
+        { f: "fastidieux", j: "退屈な", e: "Le classement de ces archives est une tâche longue et fastidieuse." },
+        { f: "infaillible", j: "絶対確実な", e: "Elle a une méthode infaillible pour mémoriser les verbes irréguliers." },
+        { f: "dérisoire", j: "取るに足らない", e: "Il a vendu sa vieille voiture pour une somme dérisoire." },
+        { f: "exhaustif", j: "網羅的な", e: "Cette liste n'est pas exhaustive, d'autres noms seront ajoutés." },
+        { f: "indispensable", j: "不可欠な", e: "Un dictionnaire est indispensable pour traduire ce texte complexe." },
+        { f: "atout", j: "強み", e: "Sa maîtrise du japonais est un atout majeur pour ce poste." },
+        { f: "contrainte", j: "制約", e: "Travailler à domicile permet d'éviter les contraintes du transport." },
+        { f: "défaillance", j: "故障、欠陥", e: "L'accident a été causé par une défaillance technique des freins." },
+        { f: "enjeu", j: "重要課題", e: "La protection de l'environnement est l'un des grands enjeux de notre siècle." },
+        { f: "fléau", j: "災い、害悪", e: "Le chômage est considéré comme un véritable fléau social." },
+        { f: "lacune", j: "欠落、抜け落ち", e: "Il doit combler ses lacunes en grammaire avant l'examen." },
         { f: "parcours", j: "道のり、経歴", e: "Son parcours professionnel est impressionnant et varié." },
         { f: "pénurie", j: "不足、欠乏", e: "Le pays fait face à une grave pénurie de main-d'œuvre qualifiée." },
         { f: "répercussion", j: "反響、影響", e: "La hausse du prix du pétrole a des répercussions sur toute l'économie." },
-        { f: "souci", j: "心配、懸念、配慮", e: "Il a toujours le souci du détail dans son travail." },
+        { f: "souci", j: "心配、懸念", e: "Il a toujours le souci du détail dans son travail." },
         { f: "tendance", j: "傾向、流行", e: "La tendance actuelle est à la réduction de la consommation de viande." },
         { f: "vigilance", j: "警戒、用心", e: "La police appelle à la plus grande vigilance après ces vols récents." },
         { f: "adversaire", j: "敵、対戦相手", e: "Il respecte toujours ses adversaires, même dans la compétition." },
-        { f: "consensus", j: "合意、意見の一致", e: "Il est difficile d'établir un consensus sur ce sujet polémique." },
-        { f: "déception", j: "期待外れ、落胆", e: "L'annulation du concert a été une grande déception pour les fans." },
-        { f: "envergure", j: "（鳥の）翼幅、規模、器量", e: "C'est un projet d'une envergure internationale sans précédent." },
+        { f: "consensus", j: "合意", e: "Il est difficile d'établir un consensus sur ce sujet polémique." },
+        { f: "déception", j: "落胆", e: "L'annulation du concert a été une grande déception pour les fans." },
+        { f: "envergure", j: "規模、器量", e: "C'est un projet d'une envergure internationale sans précédent." },
         { f: "finitude", j: "有限性", e: "L'homme doit accepter sa finitude face à l'immensité de l'univers." },
-        { f: "paradoxe", j: "逆説、矛盾した状況", e: "C'est un paradoxe d'avoir froid en plein mois d'août." },
-        { f: "rancœur", j: "恨み、根に持つ気持ち", e: "Elle ne garde aucune rancœur malgré tout ce qui s'est passé." },
+        { f: "paradoxe", j: "逆説、矛盾", e: "C'est un paradoxe d'avoir froid en plein mois d'août." },
+        { f: "rancœur", j: "恨み", e: "Elle ne garde aucune rancœur malgré tout ce qui s'est passé." },
         { f: "témoignage", j: "証言、証拠", e: "Le témoignage de l'expert a été décisif lors du procès." }
     ];
 
@@ -160,31 +152,18 @@
         document.getElementById('example').style.display = 'none';
     }
 
-    // 音声読み上げ関数
     function speak(text) {
-        // すでに喋っている場合はキャンセル
         window.speechSynthesis.cancel();
         const uttr = new SpeechSynthesisUtterance(text);
-        uttr.lang = 'fr-FR'; // フランス語に設定
-        uttr.rate = 0.9;     // 少しゆっくりめに再生
+        uttr.lang = 'fr-FR';
+        uttr.rate = 0.9;
         window.speechSynthesis.speak(uttr);
     }
 
-    function speakWord() {
-        speak(words[index].f);
-    }
-
-    function speakExample() {
-        speak(words[index].e);
-    }
-
-    function showMeaning() {
-        document.getElementById('meaning').style.display = 'block';
-    }
-
-    function showExample() {
-        document.getElementById('example').style.display = 'block';
-    }
+    function speakWord() { speak(words[index].f); }
+    function speakExample() { speak(words[index].e); }
+    function showMeaning() { document.getElementById('meaning').style.display = 'block'; }
+    function showExample() { document.getElementById('example').style.display = 'block'; }
 
     function next() {
         index = Math.floor(Math.random() * words.length);
@@ -193,6 +172,5 @@
 
     window.onload = display;
 </script>
-
 </body>
 </html>
