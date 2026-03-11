@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仏検単語帳（音声付き）</title>
+    <title>仏検単語帳（完全版）</title>
     <style>
         body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f0f2f5; }
-        .card { background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 350px; }
+        .card { background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 400px; }
         .french-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
         .french { font-size: 1.8rem; font-weight: bold; color: #002395; }
         .btn-audio { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0; color: #666; width: auto; margin: 0; }
@@ -34,8 +34,60 @@
 </div>
 
 <script>
-   const words = [
-        // 仏検準2級レベル：動詞
+    const words = [
+        // --- 読書から拾った単語（文芸・歴史・高度な表現） ---
+        { f: "substantiver", j: "名詞化する、（概念を）実体化する", e: "Certains auteurs aiment substantiver des adjectifs pour créer des concepts." },
+        { f: "chanson de geste", j: "武勲詩（中世フランスの叙事詩）", e: "La Chanson de Roland est la plus célèbre des chansons de geste." },
+        { f: "ruse", j: "策略、ずる賢さ、計略", e: "Ulysse est resté célèbre pour sa ruse lors de la guerre de Troie." },
+        { f: "errance", j: "放浪、彷徨、迷い", e: "Le roman raconte l'errance d'un homme à travers l'Europe." },
+        { f: "preux", j: "勇敢な、勇猛な騎士", e: "Un preux chevalier ne recule jamais devant le danger." },
+        { f: "étincelant", j: "きらめく、輝かしい", e: "Ses yeux étaient étincelants de joie." },
+        { f: "s'abstenir", j: "控える、棄権する", e: "Il vaut mieux s'abstenir de tout commentaire inutile." },
+        { f: "abominer", j: "ひどく嫌う、憎悪する", e: "Il abomine l'injustice sous toutes ses formes." },
+        { f: "laideur", j: "醜さ、不格好", e: "La laideur de ce bâtiment contraste avec la beauté du parc." },
+        { f: "adultère", j: "不倫、不貞、姦通", e: "L'adultère est un thème récurrent dans la littérature du XIXe siècle." },
+        { f: "parjure", j: "偽証、誓いを破ること", e: "Il a commis un parjure en mentant sous serment." },
+        { f: "bourreau", j: "死刑執行人、責め苦を与える人", e: "Dans l'histoire, le bourreau était une figure crainte de tous." },
+        { f: "prostituée", j: "売春婦、娼婦", e: "De nombreux romans réalistes dépeignent la vie des prostituées." },
+        { f: "usurier", j: "高利貸し", e: "L'usurier exigeait des intérêts exorbitants sur chaque prêt." },
+        { f: "infirme", j: "身体の不自由な（人）", e: "Depuis son accident, il est resté infirme d'une jambe." },
+        { f: "lépreux", j: "癩病患者（癩病：la lèpre）", e: "Au Moyen Âge, les lépreux vivaient souvent isolés de la société." },
+        { f: "confins", j: "国境、境界、果て", e: "Le voyageur s'est rendu aux confins du désert." },
+        { f: "triade", j: "三つ組、三和音、三柱神", e: "La triade capitoline était composée de Jupiter, Junon et Minerve." },
+
+        // --- 仏検1級レベル（最初のリスト） ---
+        { f: "vitupérer", j: "〜を激しく非難する、罵倒する", e: "Les éditorialistes n'ont cessé de vitupérer contre la passivité du gouvernement." },
+        { f: "obnubiler", j: "（考えなどが）〜を暗くする、とりこにする", e: "L'ambition l'obnubile au point qu'il en oublie ses proches." },
+        { f: "procrastiner", j: "（やるべきことを）先延ばしにする", e: "À force de procrastiner, il s'est retrouvé submergé de travail." },
+        { f: "assouvir", j: "（欲望や渇きを）十分に満たす", e: "Rien ne semblait pouvoir assouvir sa soif de connaissances." },
+        { f: "élucider", j: "（謎や問題を）解明する", e: "Les enquêteurs tentent d'élucider les circonstances mystérieuses de sa disparition." },
+        { f: "subjuguer", j: "〜を征服する、魅了して虜にする", e: "Son talent d'orateur a subjugué l'ensemble de l'auditoire." },
+        { f: "déambuler", j: "ぶらぶら歩く、そぞろ歩く", e: "Il aimait déambuler des heures durant dans les vieux quartiers de Paris." },
+        { f: "s'adonner", j: "〜にふける、専念する", e: "Pendant sa retraite, il s'est adonné passionnément à la peinture." },
+        { f: "agrémenter", j: "〜に彩りを添える", e: "Elle a agrémenté son discours de quelques anecdotes pleines d'humour." },
+        { f: "extorquer", j: "（金品や情報を）ゆすり取る", e: "Le maître chanteur a tenté de lui extorquer une somme exorbitante." },
+        { f: "succomber", j: "屈する、耐えかねる、死ぬ", e: "Il a fini par succomber à la tentation après avoir résisté si longtemps." },
+        { f: "vaticiner", j: "予言する、大言壮語する", e: "Les économistes ne cessent de vaticiner sur l'effondrement prochain du marché." },
+        { f: "stigmatiser", j: "〜に汚名を着せる、強く非難する", e: "Cette mesure risque de stigmatiser davantage les populations précaires." },
+        { f: "dilapider", j: "（財産などを）浪費する", e: "Il a dilapidé tout l'héritage familial en l'espace de quelques mois." },
+        { f: "rédhibitoire", j: "決定的な欠陥となる、受け入れがたい", e: "Une mauvaise maîtrise de l'orthographe est rédhibitoire pour ce poste." },
+        { f: "sporadique", j: "散発的な、時々起こる", e: "On entend encore des tirs sporadiques malgré l'annonce du cessez-le-feu." },
+        { f: "indéniable", j: "否定できない、明白な", e: "Son influence sur l'art contemporain est indéniable." },
+        { f: "exhaustif", j: "網羅的な、徹底的な", e: "Ce rapport propose un inventaire exhaustif des ressources naturelles." },
+        { f: "pittoresque", j: "絵のような、独特の趣がある", e: "Nous avons visité un petit village pittoresque niché dans les montagnes." },
+        { f: "obsolète", j: "時代遅れの、廃れた", e: "De nombreux termes techniques deviennent vite obsolètes." },
+        { f: "réfractaire", j: "従わない、反抗的な", e: "Une partie de la population reste réfractaire à toute forme de changement." },
+        { f: "invétéré", j: "（習慣などが）根深い、常習的な", e: "C'est un joueur invétéré qui passe ses nuits au casino." },
+        { f: "viscéral", j: "内臓の、理屈抜きで直感的な", e: "Elle éprouve une peur viscérale dès qu'elle se retrouve dans l'obscurité." },
+        { f: "débonnaire", j: "陽気で上品な、愛想の良い", e: "Malgré sa fortune, il restait un homme débonnaire et accessible." },
+        { f: "fallacieux", j: "（根拠が）偽りの、あてにならない", e: "Ses arguments fallacieux n'ont pas réussi à convaincre le jury." },
+        { f: "pérennité", j: "永続性、持続性", e: "La pérennité de l'entreprise dépend de sa capacité à innover." },
+        { f: "allégresse", j: "歓喜、大きな喜び", e: "La foule a accueilli la nouvelle avec une allégresse indescriptible." },
+        { f: "paradigme", j: "理論的枠組み、典型的な例", e: "L'intelligence artificielle représente un nouveau paradigme technologique." },
+        { f: "apanage", j: "特権、固有の持ち物", e: "À l'époque, l'accès à l'éducation était l'apanage des classes aisées." },
+        { f: "anachronisme", j: "時代錯誤", e: "Voir un smartphone dans un film médiéval est un anachronisme flagrant." },
+
+        // --- 仏検準2級・準1級レベル（中核語彙） ---
         { f: "augmenter", j: "増える、高める", e: "Le prix de l'essence a encore augmenté ce mois-ci." },
         { f: "consommer", j: "消費する", e: "Les Français consomment beaucoup de fromage." },
         { f: "exiger", j: "強く要求する", e: "Le client exige un remboursement immédiat." },
@@ -43,103 +95,39 @@
         { f: "garantir", j: "保証する", e: "Ce produit est garanti pendant deux ans." },
         { f: "contribuer", j: "貢献する、寄与する", e: "Le sport contribue au bien-être physique et mental." },
         { f: "interdire", j: "禁止する", e: "Il est interdit de fumer dans les lieux publics." },
-        { f: "prétendre", j: "主張する、〜だと言い張る", e: "Il prétend tout savoir sur ce sujet." },
+        { f: "prétendre", j: "主張する、言い張る", e: "Il prétend tout savoir sur ce sujet." },
         { f: "considérer", j: "みなす、検討する", e: "Nous considérons votre proposition avec attention." },
         { f: "maintenir", j: "維持する", e: "Il est difficile de maintenir la paix dans cette région." },
-        { f: "débrouiller", j: "（代名動詞で）なんとかやっていく、解決する", e: "Ne t'inquiète pas, je vais me débrouiller tout seul." },
-        { f: "manquer", j: "欠いている、乗り遅れる、寂しく思う", e: "Tu me manques beaucoup depuis ton départ." },
-        { f: "éprouver", j: "（感情などを）感じる、経験する", e: "Elle éprouve une grande joie à l'idée de vous revoir." },
-        { f: "consister", j: "〜から成る、〜にある", e: "Son travail consiste à accueillir les clients." },
+        { f: "débrouiller", j: "なんとかやっていく", e: "Ne t'inquiète pas, je vais me débrouiller tout seul." },
+        { f: "manquer", j: "欠いている、寂しく思う", e: "Tu me manques beaucoup depuis ton départ." },
+        { f: "éprouver", j: "感じる、経験する", e: "Elle éprouve une grande joie à l'idée de vous revoir." },
         { f: "partager", j: "共有する、分ける", e: "Nous partageons les mêmes valeurs." },
         { f: "réagir", j: "反応する", e: "Comment a-t-il réagi en apprenant la nouvelle ?" },
-        { f: "convenir", j: "（都合が）合う、ふさわしい", e: "Ce rendez-vous me convient parfaitement." },
+        { f: "convenir", j: "都合が合う、ふさわしい", e: "Ce rendez-vous me convient parfaitement." },
         { f: "distinguer", j: "区別する、見分ける", e: "Il est parfois difficile de distinguer le vrai du faux." },
-        { f: "encourager", j: "励ます、促進する", e: "Mes parents m'ont encouragé à poursuivre mes études." },
         { f: "éviter", j: "避ける", e: "Il faut éviter de conduire quand on est fatigué." },
         { f: "fournir", j: "供給する、提供する", e: "L'entreprise fournit du matériel de bureau." },
-        { f: "ignorer", j: "知らない、無視する", e: "J'ignore complètement où il est passé." },
-        { f: "menacer", j: "脅かす", e: "La pollution menace la vie marine." },
         { f: "prouver", j: "証明する", e: "Ces documents prouvent son innocence." },
         { f: "réaliser", j: "実現する、悟る", e: "Elle a enfin réalisé son rêve d'enfance." },
         { f: "sembler", j: "〜のように思われる", e: "Il semble être au courant de la situation." },
-        { f: "supposer", j: "仮定する、推測する", e: "Je suppose que vous avez déjà déjeuné." },
-        { f: "tenter", j: "試みる、誘惑する", e: "Il a tenté de s'échapper, mais sans succès." },
-        { f: "unir", j: "結びつける、団結させる", e: "Le sport unit les gens du monde entier." },
-        { f: "veiller", j: "見守る、注意する", e: "Veuillez veiller à ce que la porte soit fermée." },
-
-        // 仏検準2級レベル：名詞
         { f: "conséquence", j: "結果、影響", e: "Chaque acte a ses conséquences." },
         { f: "croissance", j: "成長、発展", e: "La croissance économique du pays ralentit." },
         { f: "obstacle", j: "障害、邪魔", e: "La barrière de la langue est un obstacle majeur." },
         { f: "développement", j: "発展、開発", e: "Le développement durable est essentiel pour l'avenir." },
         { f: "occasion", j: "機会、中古品", e: "J'ai acheté cette voiture d'occasion." },
-        { f: "comportement", j: "ふるまい、行動", e: "Son comportement a beaucoup surpris ses amis." },
-        { f: "circonstance", j: "状況、事情", e: "Les circonstances de l'accident restent floues." },
         { f: "efficacité", j: "効率、有効性", e: "Nous devons améliorer l'efficacité de notre travail." },
         { f: "domaine", j: "分野、領域", e: "Il est expert dans le domaine de l'informatique." },
-        { f: "expérience", j: "経験、実験", e: "Cette expérience m'a beaucoup appris." },
-        { f: "preuve", j: "証拠", e: "Il n'y a aucune preuve contre lui." },
-        { f: "moyen", j: "手段、方法", e: "Le train est un bon moyen de transport." },
-        { f: "objectif", j: "目標、客観的な", e: "Mon objectif est de réussir l'examen." },
         { f: "progrès", j: "進歩、上達", e: "Vous avez fait beaucoup de progrès en français." },
         { f: "ressource", j: "資源、財源", e: "L'eau est une ressource précieuse." },
         { f: "société", j: "社会、会社", e: "Nous vivons dans une société de consommation." },
-        { f: "source", j: "源、情報源", e: "Le soleil est une source d'énergie inépuisable." },
-        { f: "sujet", j: "話題、主題", e: "Nous avons discuté de plusieurs sujets intéressants." },
-        { f: "tâche", j: "任務、仕事", e: "On m'a confié une tâche très importante." },
         { f: "valeur", j: "価値", e: "Ce tableau a une grande valeur sentimentale." },
-        { f: "avantage", j: "利点、優位", e: "Le principal avantage de ce plan est sa simplicité." },
-        { f: "connaissance", j: "知識、知り合い", e: "Il a une connaissance approfondie de l'histoire." },
-        { f: "défaut", j: "欠点", e: "Personne n'est parfait, nous avons tous des défauts." },
-        { f: "effort", j: "努力", e: "Il faut faire un effort pour réussir." },
-        { f: "influence", j: "影響", e: "Ses amis ont une mauvaise influence sur lui." },
-        { f: "mesure", j: "対策、測定", e: "Le gouvernement prend des mesures contre le chômage." },
-        { f: "opinion", j: "意見", e: "Quelle est votre opinion sur ce projet ?" },
-        { f: "production", j: "生産", e: "La production industrielle a baissé ce trimestre." },
-        { f: "qualité", j: "質、長所", e: "Ce restaurant propose des produits de qualité." },
-        { f: "risque", j: "リスク、危険性", e: "Il n'y a aucun risque de se tromper." },
-
-        // 仏検準2級レベル：形容詞・副詞
-        { f: "considérable", j: "かなりの、相当な", e: "Il a fait des efforts considérables." },
         { f: "indispensable", j: "不可欠な", e: "Internet est devenu indispensable dans notre vie." },
-        { f: "excessif", j: "過度の", e: "Un bruit excessif peut être nuisible à la santé." },
         { f: "précieux", j: "貴重な", e: "Le temps est précieux, ne le perdez pas." },
         { f: "efficace", j: "効率的な、有効な", e: "C'est une méthode très efficace pour apprendre." },
-        { f: "artificiel", j: "人工的な", e: "Les fleurs artificielles n'ont pas de parfum." },
-        { f: "collectif", j: "集団の、共同の", e: "Le sport est un excellent travail collectif." },
-        { f: "décevant", j: "期待外れの", e: "Le résultat final a été assez décevant." },
-        { f: "essentiel", j: "本質的な、欠かせない", e: "Le sommeil est essentiel pour la santé." },
-        { f: "favorable", j: "好都合な、賛成の", e: "Les conditions sont favorables pour sortir." },
-        { f: "généreux", j: "寛大な、気前のよい", e: "C'est un homme très généreux avec ses amis." },
-        { f: "habituel", j: "いつもの、習慣的な", e: "Il a repris son rythme de vie habituel." },
-        { f: "inévitable", j: "避けられない", e: "Le changement est parfois inévitable." },
-        { f: "juste", j: "正しい、公平な、ちょうど", e: "Votre analyse est tout à fait juste." },
-        { f: "lointain", j: "遠い", e: "Il rêve de voyager dans des pays lointains." },
-        { f: "moderne", j: "現代的な", e: "Cette ville possède une architecture très moderne." },
-        { f: "nécessaire", j: "必要な", e: "Il est nécessaire de réserver à l'avance." },
-        { f: "particulier", j: "特別な、個別の", e: "Ce cas particulier demande une étude attentive." },
-        { f: "remarquable", j: "注目すべき、優れた", e: "Elle a fait des progrès remarquables." },
-        { f: "semblable", j: "似ている", e: "J'ai acheté une robe semblable à la tienne." },
-        { f: "temporaire", j: "一時的な", e: "C'est une solution temporaire au problème." },
-        { f: "urgent", j: "緊急の", e: "C'est une affaire urgente, répondez vite." },
-        { f: "volontaire", j: "自発的な、志願の", e: "Il a fait un travail volontaire pour l'association." },
-        { f: "complètement", j: "完全に", e: "J'ai complètement oublié notre rendez-vous." },
-        { f: "directement", j: "直接に", e: "Allez directement au bureau du directeur." },
         { f: "énormément", j: "非常に、莫大に", e: "Ce voyage m'a coûté énormément d'argent." },
-        { f: "franchement", j: "率直に", e: "Dites-moi franchement ce que vous en pensez." },
-        { f: "immédiatement", j: "すぐに", e: "Veuillez me contacter immédiatement." },
-        { f: "lentement", j: "ゆっくりと", e: "Parlez plus lentement, s'il vous plaît." },
-        { f: "normalement", j: "普通は", e: "Normalement, le magasin ferme à 19 heures." },
-        { f: "partiellement", j: "部分的に", e: "Le projet est déjà partiellement terminé." },
         { f: "récemment", j: "最近", e: "Je l'ai rencontré récemment au marché." },
         { f: "sérieusement", j: "真面目に、真剣に", e: "Il faut prendre ce problème sérieusement." },
-        { f: "tellement", j: "それほどまでに、とても", e: "Je suis tellement fatigué que je vais dormir." },
-        { f: "véritablement", j: "本当に、まさに", e: "C'est une œuvre véritablement magnifique." },
-        { f: "également", j: "同様に、また", e: "Il parle français, mais également anglais." },
-        { f: "environ", j: "約、およそ", e: "Il est arrivé il y a environ une heure." },
-        { f: "heureusement", j: "幸運にも", e: "Heureusement, il n'y a eu aucun blessé." },
-        { f: "malheureusement", j: "残念ながら", e: "Malheureusement, je ne peux pas venir." },
-        { f: "particulièrement", j: "特に", e: "Ce plat est particulièrement épicé." }
+        { f: "heureusement", j: "幸運にも", e: "Heureusement, il n'y a eu aucun blessé." }
     ];
 
     let index = 0;
@@ -168,6 +156,7 @@
     function showExample() { document.getElementById('example').style.display = 'block'; }
 
     function next() {
+        // ランダムに次を表示
         index = Math.floor(Math.random() * words.length);
         display();
     }
@@ -176,5 +165,3 @@
 </script>
 </body>
 </html>
-
-
